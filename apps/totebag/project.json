@@ -1,0 +1,61 @@
+{
+  "name": "totebag",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/totebag/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/totebag",
+        "main": "apps/totebag/src/main.ts",
+        "tsConfig": "apps/totebag/tsconfig.app.json",
+        "assets": [
+          "apps/totebag/src/assets"
+        ],
+        "webpackConfig": "apps/totebag/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "totebag:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "totebag:build:development"
+        },
+        "production": {
+          "buildTarget": "totebag:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "apps/totebag/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
